@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <title>Health Insurance Risk Calculator</title>
+</head>
+
+<!--
+    Destiny's Health Insurance Risk Calculator
+    Sprint 7
+--> 
+
+<body>
+    <h1>Health Insurance Risk Calculator</h1>
+    <p>This calculator will be used to determine the risk associated to an 
+        insurance company when insuring a new customer. The risk will be calculated 
+        based on a series of questions involving age, body-mass index, family history,  
+        and blood pressure. Please answer the following questions to calulate the risk...
+    </p>
+
+    <label>How old are you?</label><br />
+    <select id="Question 1">
+        <option value="0">29 or under</option>
+        <option value="10">30-44</option>
+        <option value="20">45-59</option>
+        <option value="30">60+</option>
+    </select><br /><br />
+    <label>Do you have a family history of diabetes?</label><br />
+    <select id="Question 2">
+        <option value="0">No</option>    
+        <option value="10">Yes</option>
+    </select><br /><br />
+    <label>Do you have a family history of cancer?</label><br />
+    <select id="Question 3">
+        <option value="0">No</option>    
+        <option value="10">Yes</option>
+    </select><br /><br />
+    <label>Do you have a family history of Alzheimer's?</label><br />
+    <select id="Question 4">
+        <option value="0">No</option>    
+        <option value="10">Yes</option>
+    </select><br /><br />
+    <label>What is your BMI?</label><br />
+    <select id="Question 5">
+        <option value="0">18.5-24.9</option>
+        <option value="30">25.0-29.9</option>
+        <option value="75">30.0-34.9</option>
+    </select><br /><br />
+    <label>What is your blood pressure? (Systolic and Diastolic)</label><br />
+    <select id="Question 6">
+        <option value="0">Less than 120mmHg AND less than 80mmHg</option>
+        <option value="15">120-129mmHg AND less than 80mmHg</option>
+        <option value="30">130-139mmHg OR 80-89mmHg</option>
+        <option value="75">140mmHg or higher OR 90mmHg or higher</option>
+        <option value="100">higher than 180mmHg AND/OR higher than 120mmHg</option>
+    </select><br /><br />
+
+<button onclick="calculateRisk()">Calculate Risk</button>
+<p id = "Risk"></p>
+
+<script>
+
+console.log('Calculate health insurance risk...');
+
+function calculateRisk () {
+    console.log("calculateRisk");
+    
+    const DESIRED_RESPONSE = [
+        0, /*29 or under*/ 
+        0, /*No*/
+        0, /*No*/
+        0, /*No*/
+        0, /*Normal*/
+        0, /*Less than 120 mmHg AND less than 80mmHg*/
+        ];
+
+   /*const QUESTION_WEIGHT = [
+    0.16,
+    0.16,
+    0.16,
+    0.16,
+    0.16,
+    0.16,
+    ]*/
+
+    const MAX_SCORE = 16
+
+    let question1Response = document.getElementById("Question 1").selectedOptions[0].value;
+    let question2Response = document.getElementById("Question 2").selectedOptions[0].value;
+    let question3Response = document.getElementById("Question 3").selectedOptions[0].value;
+    let question4Response = document.getElementById("Question 4").selectedOptions[0].value;
+    let question5Response = document.getElementById("Question 5").selectedOptions[0].value;
+    let question6Response = document.getElementById("Question 6").selectedOptions[0].value;
+
+    let question1Risk = Math.abs(question1Response);
+    let question2Risk = Math.abs(question1Response);
+    let question3Risk = Math.abs(question1Response);
+    let question4Risk = Math.abs(question1Response);
+    let question5Risk = Math.abs(question1Response);
+    let question6Risk = Math.abs(question1Response);
+
+    let totalRisk = (question1Risk+question2Risk+question3Risk+question4Risk+question5Risk+question6Risk)
+    totalRisk *= 100/MAX_SCORE;
+    totalRisk = Math.round(totalRisk)
+    console.log("Total Risk=" + totalRisk)
+
+   /* document.getElementById("Risk").innerHTML = "Your health insurance risk is " + totalRisk;*/
+
+    if (totalRisk <=20)
+    document.getElementById("Risk").innerHTML = "Your health insurance risk level is low";
+
+    else if (totalRisk <=50)
+    document.getElementById("Risk").innerHTML = "Your health insurance risk level is moderate";
+
+    else if (totalRisk <=75)
+    document.getElementById("Risk").innerHTML = "Your health insurance risk level is high";
+
+    else if (totalRisk >=75)
+    document.getElementById("Risk").innerHTML = "Your health insurance risk level is immeasurable";
+}
+</script>
+</body>
+</html>
